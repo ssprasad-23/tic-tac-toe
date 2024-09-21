@@ -154,7 +154,7 @@ const TicTacToe = () => {
   const reset = () => {
     setLock(false);
     data = ["","","","","","","","","",];
-    titleRef.current.innerHTML = "The Unbeatable game of Tic-Tac-Toe In <span>React</span>";
+    titleRef.current.innerHTML = "The Unbeatable Game of Tic-Tac-Toe In <span>React</span>";
     box_array.map((e) => {
       e.current.innerHTML = "";
     })
