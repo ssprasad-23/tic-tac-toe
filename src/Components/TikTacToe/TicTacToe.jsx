@@ -3,11 +3,10 @@ import './TicTacToe.css'
 import circle_icon from '../Assets/circle.png'
 import cross_icon from '../Assets/cross.png'
 
-let data = ["","","","","","","","","",]
+let data = ["","","","","","","","","",];
 
 const TicTacToe = () => {
-  let [count, setCount] = useState(0);
-  let [lock, setLock] = useState(false)
+  let [lock, setLock] = useState(false);
   let titleRef = useRef(null);
   let box1 = useRef(null);
   let box2 = useRef(null);
@@ -22,76 +21,148 @@ const TicTacToe = () => {
   let box_array = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
   const toggle = (e, num) => {
-    if (lock){
-      return 0;
+    if (lock || data[num] !== ""){
+      return;
     }
-    if (count%2===0){
-      e.target.innerHTML = `<img src='${cross_icon}'>`;
-      data[num]="x";
-      setCount(++count);
 
+    //player move (x)
+    e.target.innerHTML = `<img src='${cross_icon}'>`;
+    data[num] = "x";
+
+    if (checkWin()){
+      return;
+    }
+
+    setTimeout(computerMove, 10);
+  };
+
+  const computerMove = () => {
+    let bestMove = findBestMove();
+    if (bestMove !== -1){
+      let box = box_array[bestMove].current;
+      box.innerHTML = `<img src='${circle_icon}'>`;
+      data[bestMove] = 'o';
+    }
+
+    checkWin();
+  };
+
+  const findBestMove = () => {
+    let bestVal = -Infinity;
+    let bestMove = -1;
+
+    for (let i=0; i<9; i++){
+      if (data[i] === ""){
+        //make the move
+        data[i] = "o";
+
+        //compute the minimax value for this move
+        let moveVal = minimax(0, false);
+
+        //undo the move
+        data[i] = "";
+
+        //if the value of the current move is greater than the best value, update bestMove
+        if (moveVal > bestVal){
+          bestMove = i;
+          bestVal = moveVal;
+        }
+      }
+    }
+    return bestMove;
+  }
+
+  const minimax = (depth, isMaximizing) => {
+    let score = evaluate();
+
+    //if the computer (o) has won
+    if (score === 10) return score - depth;
+
+    //if player(x) has won
+    if (score===-10) return score + depth;
+
+    //if its a draw
+    if (!data.includes("")) return 0;
+
+    if (isMaximizing){
+      let best = -Infinity;
+
+      for (let i=0; i<9; i++){
+        if (data[i] === ""){
+          data[i] = "o";
+          best = Math.max(best, minimax(depth +1, false));
+          data[i] = "";
+        }
+      }
+      return best;
     }
     else{
-      e.target.innerHTML = `<img src='${circle_icon}'>`;
-      data[num]="o";
-      setCount(++count);
-    }
-    checkWin()
+      let best = Infinity;
 
+      for (let i=0; i<9; i++){
+        if (data[i] === ""){
+          data[i] = "x";
+          best = Math.min(best, minimax(depth +1, true));
+          data[i] = "";
+        }
+      }
+      return best;
+    }
+  }
+
+  const evaluate = () => {
+    //winning patterns
+    const winPatterns =[
+      [0,1,2], [3,4,5], [6,7,8], //Rows
+      [0,3,6], [1,4,7], [2,5,8], //Columns
+      [0,4,8], [2,4,6], //Diagonals
+    ];
+
+    //check if someone won
+    for (let pattern of winPatterns){
+      const [a,b,c] = pattern;
+      if (data[a] === data[b] && data[b] === data[c] && data[a]!== ""){
+        if (data[a] === "o") return 10; //Computer wins
+        if (data[a] === "x") return -10; //Player wins
+      }
+    }
+
+    return 0; //No winner
   }
 
   const checkWin = () => {
-    //horizontal
-    if (data[0] === data[1] && data[1] === data[2] & data[2] !== ""){
-      won(data);
-    }
-    else if (data[3] === data[4] && data[4] === data[5] & data[5] !== ""){
-      won(data);
-    }
-    else if (data[6] === data[7] && data[7] === data[8] & data[8] !== ""){
-      won(data);
-    }
-    //vertical
-    else if (data[0] === data[3] && data[3] === data[6] & data[6] !== ""){
-      won(data);
-    }
-    else if (data[1] === data[4] && data[4] === data[7] & data[7] !== ""){
-      won(data);
-    }
-    else if (data[2] === data[5] && data[5] === data[8] & data[8] !== ""){
-      won(data);
-    }
-    //diagonal
-    else if (data[0] === data[4] && data[4] === data[8] & data[8] !== ""){
-      won(data);
-    }
-    else if (data[2] === data[4] && data[4] === data[6] & data[6] !== ""){
-      won(data);
-    }
-  }
+    let result = evaluate();
 
-  const won = (winner) => {
-    setLock(true);
-    if(winner === "x"){
-      titleRef.current.innerHTML = `Congratulations: <img src=${cross_icon}> wins`
+    if (result ===10){
+      titleRef.current.innerHTML = "Computer wins!";
+      setLock(true);
+      return true;
     }
-    else{
-      titleRef.current.innerHTML = `Congratulations: <img src=${circle_icon} > wins`
+    else if (result ===-10){
+      titleRef.current.innerHTML = "Player wins";
+      setLock(true);
+      return true;
     }
+    else if (!data.includes("")){
+      titleRef.current.innerHTML = "It's a draw!";
+      setLock(true);
+      return true;
+    }
+    return false;
   }
 
   const reset = () => {
     setLock(false);
     data = ["","","","","","","","","",];
-    titleRef.current.innerHTML = "Tic-Tac-Toe Game In <span>React</span>";
-    box_array.map((e) => {
+    titleRef.current.innerHTML = "The Unbeatable Game of Tic-Tac-Toe In <span>React</span>";
+    box_array.forEach((e) => {
       e.current.innerHTML = "";
     })
   }
 
   return (
     <div className='container'>
-      <h1 className="title" ref={titleRef}>Tic-Tac-Toe Game In <span>React</span></h1>
+      <h1 className="title" ref={titleRef}>The Unbeatable Game of Tic-Tac-Toe In <span>React</span></h1>
       <div className="board">
         <div className="row1">
             <div className="boxes" ref={box1} onClick={(e)=>{toggle(e,0)}}></div>
