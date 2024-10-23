@@ -33,7 +33,7 @@ const TicTacToe = () => {
       return;
     }
 
-    setTimeout(computerMove, 500);
+    setTimeout(computerMove, 10);
   };
 
   const computerMove = () => {
