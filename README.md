@@ -1,4 +1,4 @@
-Project Title : Unbeatable Game of Tic Tac Toe
+Project Title: Unbeatable Game of Tic Tac Toe
 
 A classic Tic Tac Toe game built with React, featuring an unbeatable AI opponent. Play as the first mover and challenge the computer to a game that always results in a draw or a win for the AI.
 
@@ -6,7 +6,7 @@ A classic Tic Tac Toe game built with React, featuring an unbeatable AI opponent
 Description : 
 Unbeatable Game of Tic Tac Toe is a React-based implementation of the classic Tic Tac Toe game where you play against computer opponent that never loses. As the player, you always make the first move, and the algorithm intelligently responds to ensure a win or a draw for itself. This project showcases fundamental React concepts, state management, and the implementation of the Minimax algorithm for creating an unbeatable TicTactoe.
 
-Demo : https://crossandknot.netlify.app
+Demo: https://crossandknot.netlify.app
 
 Screenshots
 ![alt text](<Screenshot 2024-09-21 at 6.57.32 PM.png>)
