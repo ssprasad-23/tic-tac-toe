@@ -30,13 +30,14 @@ Technologies Used
 
 Installation
 Prerequisites
-	•	Node.js: Ensure you have Node.js installed. You can download it from here.
-	•	npm or yarn: Node package manager comes with Node.js. Alternatively, you can use yarn.
+Node.js: Ensure you have Node.js installed. You can download it from here.
+npm or yarn: Node package manager comes with Node.js. Alternatively, you can use yarn.
+
 Installation Steps
-	1
- 	2	clone
-	3	Install Dependencies - npm install
-	4	Run the Application - npm start
+
+ 	1	clone
+	2	Install Dependencies - npm install
+	3	Run the Application - npm start
 
 
 Project Structure
