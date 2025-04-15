@@ -4,9 +4,6 @@ https://crossandknot.netlify.app
 
 A classic Tic Tac Toe game built with React, featuring an unbeatable computer opponent with the implementation of a minimax algorithm. As the player, you always make the first move, and the algorithm intelligently responds to ensure a win or a draw for itself. This project showcases fundamental React concepts, state management, and the implementation of the Minimax algorithm for creating an unbeatable Tic Tac Toe experience.
 
-
-
-
 Features
 - Unbeatable AI Opponent: Challenge an AI that never loses, ensuring either a win for the computer or a draw.
 - First-Move Advantage: Player always makes the first move, adding a strategic layer to the game.
