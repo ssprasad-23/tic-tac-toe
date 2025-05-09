@@ -13,7 +13,7 @@ Features
 - Visual Feedback: Displays images for 'X' and 'O' using custom icons to enhance user experience.
 
 Technologies Used
-- Frontend: React, JavaScript (ES6)
+- Frontend: React, JavaScript
 - Styling: CSS
 - Assets: Custom images for game icons
 - Build Tool: Create React App
