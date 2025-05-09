@@ -28,6 +28,3 @@ Installation Steps
 3. Run the applicaiton:
    npm start   
 
-
-Screenshots
-![alt text](<Screenshot 2024-09-21 at 6.58.00 PM-1.png>)
